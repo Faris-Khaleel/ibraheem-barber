@@ -53,5 +53,6 @@ The combined comparison places the selected Option 1 mock and the rendered mid-s
 - Tightened the smallest About heading, added safe-area-aware header spacing, and disabled sticky hover treatments on touch devices.
 - Verified zero horizontal overflow at the 390 x 844 viewport and clean fitting at the 320 x 720 compact viewport.
 - Added a dedicated 701–980 px tablet composition and a real chair poster beneath the native video, so the chair remains visible before decoding, during slow loading, and with reduced motion.
+- Added a touch-gesture video unlock and coarse-pointer fast-seek path so iOS and mobile Safari repaint the paused transformation film while the finger is actively scrolling.
 
 final result: passed

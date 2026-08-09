@@ -15,10 +15,13 @@ export function TransformationStage({ progressRef }) {
 
     const ritual = shell.closest(".ritual");
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const coarsePointer = window.matchMedia("(pointer: coarse)");
     let targetProgress = clamp(progressRef?.current ?? 0, 0, 1);
     let visible = true;
     let syncFrame = 0;
     let seekQueued = false;
+    let videoUnlocked = false;
+    let unlockInFlight = false;
 
     const syncVideo = () => {
       syncFrame = 0;
@@ -28,12 +31,20 @@ export function TransformationStage({ progressRef }) {
       const targetTime = targetProgress * timelineEnd;
       if (Math.abs(video.currentTime - targetTime) < FRAME_DURATION * 0.55) return;
 
-      if (video.seeking) {
+      if (video.seeking && !coarsePointer.matches) {
         seekQueued = true;
         return;
       }
 
-      video.currentTime = targetTime;
+      if (coarsePointer.matches && typeof video.fastSeek === "function") {
+        try {
+          video.fastSeek(targetTime);
+        } catch {
+          video.currentTime = targetTime;
+        }
+      } else {
+        video.currentTime = targetTime;
+      }
     };
 
     const scheduleSync = () => {
@@ -53,6 +64,35 @@ export function TransformationStage({ progressRef }) {
     };
 
     const onLoadedData = () => shell.classList.add("is-video-ready");
+
+    const unlockVideo = () => {
+      if (videoUnlocked || unlockInFlight || reduceMotion.matches) return;
+      unlockInFlight = true;
+
+      const playAttempt = video.play();
+      if (!playAttempt?.then) {
+        video.pause();
+        videoUnlocked = true;
+        unlockInFlight = false;
+        scheduleSync();
+        return;
+      }
+
+      playAttempt
+        .then(() => {
+          video.pause();
+          videoUnlocked = true;
+          unlockInFlight = false;
+          scheduleSync();
+        })
+        .catch(() => {
+          unlockInFlight = false;
+        });
+    };
+
+    const onCanPlay = () => {
+      if (coarsePointer.matches) unlockVideo();
+    };
 
     const onLoadedMetadata = () => {
       video.pause();
@@ -76,8 +116,10 @@ export function TransformationStage({ progressRef }) {
     video.pause();
     visibilityObserver.observe(shell);
     ritual?.addEventListener("ritual:progress", onProgress);
+    ritual?.addEventListener("touchstart", unlockVideo, { passive: true });
     video.addEventListener("loadedmetadata", onLoadedMetadata);
     video.addEventListener("loadeddata", onLoadedData);
+    video.addEventListener("canplay", onCanPlay);
     video.addEventListener("seeked", onSeeked);
     reduceMotion.addEventListener("change", onMotionChange);
     if (video.readyState >= 1) scheduleSync();
@@ -86,8 +128,10 @@ export function TransformationStage({ progressRef }) {
       if (syncFrame) cancelAnimationFrame(syncFrame);
       visibilityObserver.disconnect();
       ritual?.removeEventListener("ritual:progress", onProgress);
+      ritual?.removeEventListener("touchstart", unlockVideo);
       video.removeEventListener("loadedmetadata", onLoadedMetadata);
       video.removeEventListener("loadeddata", onLoadedData);
+      video.removeEventListener("canplay", onCanPlay);
       video.removeEventListener("seeked", onSeeked);
       reduceMotion.removeEventListener("change", onMotionChange);
     };
