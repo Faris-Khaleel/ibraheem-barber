@@ -52,5 +52,6 @@ The combined comparison places the selected Option 1 mock and the rendered mid-s
 - Reduced the floating WhatsApp control's footprint, removed hidden-link focus/pointer exposure, and made it withdraw from Contact onward so the phone number remains unobstructed.
 - Tightened the smallest About heading, added safe-area-aware header spacing, and disabled sticky hover treatments on touch devices.
 - Verified zero horizontal overflow at the 390 x 844 viewport and clean fitting at the 320 x 720 compact viewport.
+- Added a dedicated 701–980 px tablet composition and a real chair poster beneath the native video, so the chair remains visible before decoding, during slow loading, and with reduced motion.
 
 final result: passed

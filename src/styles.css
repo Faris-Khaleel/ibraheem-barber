@@ -503,6 +503,7 @@ section[id] { scroll-margin-top: 62px; }
   touch-action: pan-y;
 }
 
+.transformation-stage__poster,
 .transformation-stage__video {
   position: absolute;
   inset: 0;
@@ -511,6 +512,16 @@ section[id] { scroll-margin-top: 62px; }
   object-fit: cover;
   object-position: center;
 }
+.transformation-stage__poster {
+  z-index: 0;
+  max-width: none;
+}
+.transformation-stage__video {
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+.transformation-stage.is-video-ready .transformation-stage__video { opacity: 1; }
 .chair-scene {
   position: relative;
   z-index: 2;
@@ -788,6 +799,21 @@ a.contact-link:hover svg:last-child { transform: translateX(7px); }
   .final-cta { grid-template-columns: 1fr; align-items: start; }
 }
 
+@media (min-width: 701px) and (max-width: 980px) {
+  .ritual__copy {
+    width: min(40vw, 380px);
+  }
+  .transformation-stage__poster,
+  .transformation-stage__video {
+    top: 20%;
+    left: 0;
+    width: 145%;
+    height: 76%;
+    object-fit: contain;
+    object-position: center;
+  }
+}
+
 @media (max-width: 700px) {
   :root { --page-pad: 18px; }
   .site-header {
@@ -843,6 +869,7 @@ a.contact-link:hover svg:last-child { transform: translateX(7px); }
   }
   .ritual__rail button b { display: none; }
   .ritual__signature { display: none; }
+  .transformation-stage__poster,
   .transformation-stage__video {
     top: 35%;
     left: -47.5%;

@@ -46,10 +46,13 @@ export function TransformationStage({ progressRef }) {
     };
 
     const onSeeked = () => {
+      shell.classList.add("is-video-ready");
       if (!seekQueued) return;
       seekQueued = false;
       scheduleSync();
     };
+
+    const onLoadedData = () => shell.classList.add("is-video-ready");
 
     const onLoadedMetadata = () => {
       video.pause();
@@ -74,6 +77,7 @@ export function TransformationStage({ progressRef }) {
     visibilityObserver.observe(shell);
     ritual?.addEventListener("ritual:progress", onProgress);
     video.addEventListener("loadedmetadata", onLoadedMetadata);
+    video.addEventListener("loadeddata", onLoadedData);
     video.addEventListener("seeked", onSeeked);
     reduceMotion.addEventListener("change", onMotionChange);
     if (video.readyState >= 1) scheduleSync();
@@ -83,6 +87,7 @@ export function TransformationStage({ progressRef }) {
       visibilityObserver.disconnect();
       ritual?.removeEventListener("ritual:progress", onProgress);
       video.removeEventListener("loadedmetadata", onLoadedMetadata);
+      video.removeEventListener("loadeddata", onLoadedData);
       video.removeEventListener("seeked", onSeeked);
       reduceMotion.removeEventListener("change", onMotionChange);
     };
@@ -90,6 +95,14 @@ export function TransformationStage({ progressRef }) {
 
   return (
     <div ref={shellRef} className="transformation-stage">
+      <img
+        className="transformation-stage__poster"
+        src="/images/ritual/01-empty-chair.webp"
+        alt=""
+        aria-hidden="true"
+        width="1280"
+        height="720"
+      />
       <video
         ref={videoRef}
         className="transformation-stage__video"
