@@ -841,8 +841,7 @@ a.contact-link:hover svg:last-child { transform: translateX(7px); }
   .work-card--6 { margin-top: 0; }
   .work-card figcaption { gap: 8px; font-size: 10px; }
   .ritual { height: 380svh; }
-  .ritual__topline { top: 76px; }
-  .ritual__topline p:last-child { display: none; }
+  .ritual__topline { display: none; }
   .ritual__copy {
     top: 14%;
     left: var(--page-pad);

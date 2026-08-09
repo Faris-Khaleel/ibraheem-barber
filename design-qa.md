@@ -54,5 +54,6 @@ The combined comparison places the selected Option 1 mock and the rendered mid-s
 - Verified zero horizontal overflow at the 390 x 844 viewport and clean fitting at the 320 x 720 compact viewport.
 - Added a dedicated 701–980 px tablet composition and a real chair poster beneath the native video, so the chair remains visible before decoding, during slow loading, and with reduced motion.
 - Added a touch-gesture video unlock and coarse-pointer fast-seek path so iOS and mobile Safari repaint the paused transformation film while the finger is actively scrolling.
+- Confirmed the protected branch alias redirects the MP4 request to Vercel SSO, while `https://ibraheem-barber.vercel.app/videos/ritual-transformation.mp4` returns public `video/mp4` responses with byte-range support. The public production domain is now canonical, and the redundant mobile transformation topline was removed.
 
 final result: passed
