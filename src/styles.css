@@ -551,6 +551,124 @@ section[id] { scroll-margin-top: 62px; }
 .chair-scene.is-ready .chair-scene__canvas { opacity: 1; }
 .chair-scene.is-ready .chair-scene__fallback { opacity: 0; }
 
+.dubai-meridian {
+  --dubai-progress: 0;
+  --dubai-sun-x: 72%;
+  --dubai-sun-y: 64%;
+  --dubai-sun-scale: .86;
+  position: relative;
+  height: 180svh;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.dubai-meridian__sticky {
+  position: sticky;
+  top: 0;
+  isolation: isolate;
+  height: 100svh;
+  min-height: 660px;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.dubai-meridian__sun {
+  position: absolute;
+  z-index: 1;
+  left: var(--dubai-sun-x);
+  top: var(--dubai-sun-y);
+  width: min(50vw, 780px);
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(var(--dubai-sun-scale));
+  transform-origin: center;
+  will-change: transform, left, top;
+}
+
+.dubai-meridian__plate {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  transform: translateY(calc((var(--dubai-progress) - .5) * -18px)) scale(1.025);
+  transform-origin: center;
+  will-change: transform;
+}
+
+.dubai-meridian__coordinates,
+.dubai-meridian__location,
+.dubai-meridian__cue {
+  position: absolute;
+  z-index: 4;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.dubai-meridian__coordinates {
+  top: 13.5%;
+  left: clamp(44px, 5vw, 76px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dubai-meridian__coordinates i {
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: .38;
+}
+
+.dubai-meridian__copy {
+  position: absolute;
+  z-index: 4;
+  top: 22.5%;
+  left: clamp(44px, 5vw, 76px);
+}
+
+.dubai-meridian__copy h2 {
+  margin: 0;
+  font-size: clamp(76px, 9.1vw, 152px);
+  font-weight: 700;
+  line-height: .82;
+  letter-spacing: -.066em;
+  text-transform: uppercase;
+}
+
+.dubai-meridian__copy h2 span { display: block; }
+
+.dubai-meridian__location {
+  left: clamp(44px, 5vw, 76px);
+  top: 55%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dubai-meridian__location p { margin: 0; }
+.dubai-meridian__location p[lang="ar"] {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
+.dubai-meridian__cue {
+  left: clamp(44px, 5vw, 76px);
+  bottom: 37px;
+}
+
 .services { background: var(--cream); color: var(--ink); }
 .service-row {
   display: grid;
@@ -661,6 +779,8 @@ a.contact-link:hover svg:last-child { transform: translateX(7px); }
   .hero__statement { font-size: clamp(28px, 4.5vw, 42px); }
   .ritual__copy { width: min(42vw, 480px); }
   .ritual__signature { display: none; }
+  .dubai-meridian__copy h2 { font-size: clamp(76px, 11.6vw, 124px); }
+  .dubai-meridian__sun { width: 64vw; }
   .about { grid-template-columns: 1fr 1fr; }
   .about__content { padding: 70px 44px; }
   .contact { grid-template-columns: 1fr; }
@@ -728,6 +848,36 @@ a.contact-link:hover svg:last-child { transform: translateX(7px); }
     object-fit: contain;
     object-position: center;
   }
+  .dubai-meridian { height: 155svh; }
+  .dubai-meridian__sticky { min-height: 580px; }
+  .dubai-meridian__coordinates {
+    top: 12%;
+    left: var(--page-pad);
+  }
+  .dubai-meridian__copy {
+    top: 20%;
+    left: var(--page-pad);
+    right: var(--page-pad);
+  }
+  .dubai-meridian__copy h2 {
+    font-size: clamp(58px, 17.6vw, 78px);
+    line-height: .82;
+    letter-spacing: -.058em;
+  }
+  .dubai-meridian__sun { width: 122vw; }
+  .dubai-meridian__plate {
+    width: 170%;
+    left: -70%;
+    object-position: 73% center;
+  }
+  .dubai-meridian__location {
+    top: 53%;
+    left: var(--page-pad);
+  }
+  .dubai-meridian__cue {
+    left: var(--page-pad);
+    bottom: 96px;
+  }
   .service-row { grid-template-columns: 38px 1fr auto; min-height: 86px; }
   .service-row__name { font-size: clamp(34px, 10.5vw, 48px); }
   .service-row__arrow { width: 34px; }
@@ -780,6 +930,9 @@ a.contact-link:hover svg:last-child { transform: translateX(7px); }
   .chair-scene__fallback, .chair-scene__canvas { transition: none; }
   .ritual__act { transition: none; }
   .transformation-stage__video { display: none; }
+  .dubai-meridian { height: 100svh; }
+  .dubai-meridian__sun,
+  .dubai-meridian__plate { will-change: auto; }
 }
 
 @media (forced-colors: active) {

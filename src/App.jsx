@@ -8,6 +8,7 @@ import {
   X,
 } from "@phosphor-icons/react";
 import { CutRitual } from "./CutRitual";
+import { DubaiMeridian } from "./DubaiMeridian";
 import { siteConfig } from "./siteConfig";
 
 const smallImage = (src) => src.replace(".webp", "-sm.webp");
@@ -337,6 +338,7 @@ export function App() {
         <Hero offset={heroOffset} />
         <WorkGallery />
         <CutRitual />
+        <DubaiMeridian />
         <Services />
         <About />
         <ImageBreak />
