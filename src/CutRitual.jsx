@@ -32,6 +32,7 @@ const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
 export function CutRitual() {
   const sectionRef = useRef(null);
+  const progressRef = useRef(0);
   const [activeAct, setActiveAct] = useState(0);
 
   useEffect(() => {
@@ -48,7 +49,9 @@ export function CutRitual() {
       const progress = clamp(-rect.top / travel, 0, 1);
       const nextAct = Math.min(acts.length - 1, Math.floor(progress * acts.length));
 
+      progressRef.current = progress;
       section.style.setProperty("--ritual-progress", progress.toFixed(4));
+      section.dispatchEvent(new CustomEvent("ritual:progress", { detail: progress }));
       if (nextAct !== currentAct) {
         currentAct = nextAct;
         setActiveAct(nextAct);
@@ -92,7 +95,7 @@ export function CutRitual() {
     >
       <div className="ritual__sticky">
         <div className="ritual__scene">
-          <TransformationStage />
+          <TransformationStage progressRef={progressRef} />
         </div>
 
         <div className="ritual__topline">
