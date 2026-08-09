@@ -55,5 +55,6 @@ The combined comparison places the selected Option 1 mock and the rendered mid-s
 - Added a dedicated 701–980 px tablet composition and a real chair poster beneath the native video, so the chair remains visible before decoding, during slow loading, and with reduced motion.
 - Added a touch-gesture video unlock and coarse-pointer fast-seek path so iOS and mobile Safari repaint the paused transformation film while the finger is actively scrolling.
 - Confirmed the protected branch alias redirects the MP4 request to Vercel SSO, while `https://ibraheem-barber.vercel.app/videos/ritual-transformation.mp4` returns public `video/mp4` responses with byte-range support. The public production domain is now canonical, and the redundant mobile transformation topline was removed.
+- Reproduced the transformation in an iPhone 15 WebKit session with a coarse pointer. At chapter 03 the native video decoded at 7.59 seconds with `readyState: 4`, the visible video layer replaced the poster, the deterministic fallback advanced to `03-cape-before.webp`, horizontal overflow remained zero, and the console remained clean.
 
 final result: passed
