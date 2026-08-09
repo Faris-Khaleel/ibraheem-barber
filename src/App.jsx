@@ -23,6 +23,7 @@ const navItems = [
 function usePageMotion() {
   const [scrolled, setScrolled] = useState(false);
   const [heroOffset, setHeroOffset] = useState(0);
+  const [contactReached, setContactReached] = useState(false);
 
   useEffect(() => {
     let frame = 0;
@@ -30,8 +31,10 @@ function usePageMotion() {
       if (frame) return;
       frame = requestAnimationFrame(() => {
         const y = window.scrollY;
+        const contact = document.getElementById("contact");
         setScrolled(y > 32);
         setHeroOffset(Math.min(y * 0.08, 64));
+        setContactReached(Boolean(contact && y + window.innerHeight * 0.62 >= contact.offsetTop));
         frame = 0;
       });
     };
@@ -43,7 +46,7 @@ function usePageMotion() {
     };
   }, []);
 
-  return { scrolled, heroOffset };
+  return { scrolled, heroOffset, contactReached };
 }
 
 function useReveal() {
@@ -328,7 +331,7 @@ function Footer() {
 }
 
 export function App() {
-  const { scrolled, heroOffset } = usePageMotion();
+  const { scrolled, heroOffset, contactReached } = usePageMotion();
   useReveal();
 
   return (
@@ -346,7 +349,7 @@ export function App() {
         <FinalCTA />
       </main>
       <Footer />
-      <BookingLink className={`mobile-book ${scrolled ? "is-visible" : ""}`} icon>
+      <BookingLink className={`mobile-book ${scrolled && !contactReached ? "is-visible" : ""}`} icon>
         Book on WhatsApp
       </BookingLink>
     </>

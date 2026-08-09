@@ -45,4 +45,12 @@ The combined comparison places the selected Option 1 mock and the rendered mid-s
 - Build: `npm run build` passed and emitted `dist/client/index.html`, `dist/server/index.js`, and `dist/.openai/hosting.json`.
 - Sites worker tests: `npm run test:sites` passed, 4 of 4.
 
+## Mobile responsive follow-up
+
+- Audited the hero, navigation, work gallery, transformation, Dubai interlude, Services, About, image break, Contact, final CTA, and footer at 390 x 844 and 320 x 720.
+- Enlarged the transformation film on phones and lifted the four-step chapter rail above the booking control.
+- Reduced the floating WhatsApp control's footprint, removed hidden-link focus/pointer exposure, and made it withdraw from Contact onward so the phone number remains unobstructed.
+- Tightened the smallest About heading, added safe-area-aware header spacing, and disabled sticky hover treatments on touch devices.
+- Verified zero horizontal overflow at the 390 x 844 viewport and clean fitting at the 320 x 720 compact viewport.
+
 final result: passed
